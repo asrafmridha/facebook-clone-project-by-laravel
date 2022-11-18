@@ -73,6 +73,8 @@
         <link rel="stylesheet" href="assets/css/style.css"/>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -85,6 +87,9 @@
                 box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.4);
             }
         </style>
+
+            
+        
 
 </script>
     </head>
@@ -114,13 +119,24 @@
                         <div class=" col-sm-12">
                             <div class="signup-form">
                                 <h1>Create a new account</h1>
-                                <form action="javascript:void(0);">
+                                <form action="{{ route('register') }}" method="POST">
+
+                                    @csrf
+
                                 <div class="row">
                                     <div class="form-group col-md-6">
-                                        <input type="text" placeholder="First Name" name="fname" class="input-lg col-md-12"/>
+                                        <input type="text" placeholder="First Name" name="f_name" class="input-lg col-md-12"/>
+                                    @error('f_name')
+                                    <small class="text-danger">{{ $message }}</small>
+                                    @enderror   
+                                        
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <input type="text" placeholder="Last Name" name="lname" class="input-lg col-md-12"/>
+                                        <input type="text" placeholder="Last Name" name="l_name" class="input-lg col-md-12"/>
+
+                                        @error('l_name')
+                                        <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
                                 </div>
                                     <div class="form-group">
@@ -131,7 +147,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="password" placeholder="Confirm Password" name="pwd" class="input-lg col-sm-12"/>
+                                        <input type="password" placeholder="Confirm Password" name="password_confirmation" class="input-lg col-sm-12"/>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col-sm-2">
@@ -149,7 +165,7 @@
                                                 <h4 >Birthday</h4>
                                             </div>
                                             <div class="col-sm-1">
-                                                <select class="input-lg" name="date">
+                                                <select class="input-lg" name="day">
                                                     <option value="0" selected="selected">Day</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option>
                                                 </select>
                                             </div>
@@ -166,7 +182,8 @@
                                         <small class="text-mute">By clicking Create Account, you agree to our Terms and confirm that you have read our Data Policy, including our Cookie Use Policy. You may receive SMS message notifications from FaceClone and can opt out at any time.</small>
                                     </div>
                                     <div class="form-group">
-                                        <input type="submit" value="Create Account" class="btn btn-success input-lg"/>
+                                        {{-- <input type="submit" value="Create Account" class="btn btn-success input-lg"/> --}}
+                                        <button type="submit" class="btn btn-success input-lg">Create Account</button>
                                     </div>
                                 </form>
                             </div>
@@ -186,4 +203,51 @@
         </div>
     </body>
 </html>
+
+
+     <!-- Toastr Message Script-->
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+     <script>
+
+toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "3000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        $(window).on("load", function(){
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    toastr.error('{{ $error }}');
+                @endforeach
+            @endif
+
+            @if(session()->get('error'))
+                toastr.error('{{ session()->get('error') }}');
+            @endif
+
+            @if(session()->get('success'))
+                toastr.success('{{ session()->get('success') }}');
+            @endif
+        });
+
+    
+</script>
+
+
+
+
 
