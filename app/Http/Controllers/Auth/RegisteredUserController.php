@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use DateTime;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,15 +34,33 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            
+            'f_name' => ['required', 'string', 'max:255',],
+            'l_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'day'      =>['required', 'numeric'],
+            
+            'month'    =>['required', 'numeric'],
+            'year'      =>['required', 'numeric'],
+            'sex'      =>['required'],
+        ],[
+
+            'f_name.required'=>'First Name is required',
+            'l_name.required'=>'Last Name is required',
+            'sex.required'=>'Gender Field is required',
         ]);
 
+        $birthday=DateTime::createFromFormat('Y-m-d',$request->get('year').'-'.$request->get('month').'-'.$request->day);
+
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'f_name' => $request->f_name,
+            'l_name'   => $request->l_name,
+            'b_date'   => $birthday,
+            'sex'      =>$request->sex,
+            'email'    =>$request->email,
             'password' => Hash::make($request->password),
         ]);
 
