@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::post('/login',function(){
-    return view('login');
+// Route::post('/login',function(){
+//     return view('login');
 
-})->name('login.view');
+// })->name('login.view');

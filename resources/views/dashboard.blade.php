@@ -44,15 +44,19 @@
                     <ul>
                         <li><a href="./dashboard.html" class="active">News Feed</a></li>
                         <li><a href="./settings.html" class="active">Settings</a></li>
-                        <li><a href="./index.html">Logout</a></li>
+                        <li>
+                        <form action="{{ route('logout') }} " method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-danger" >Logout</button>
+                        </form>
+                        </li>
                     </ul>
                 </div>
                 <div class="col-sm-6">
                     <div class="post col-sm-12" id="new_post">
                         <div class="row post-heading" style="background: #2d9a40;">
                             <div class="col-sm-12">
-                                <h4 id="post-header">Create New Post</h4><br/>
-
+                                <h4 id="post-header">Create New Post</h4><br/>]
                             </div>
                         </div>
                         <div class="row" style="padding: 10px;">
