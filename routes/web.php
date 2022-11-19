@@ -18,9 +18,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -34,3 +34,12 @@ require __DIR__.'/auth.php';
 //     return view('login');
 
 // })->name('login.view');
+
+Route::group(['prefix'=>'','middleware'=>['auth']],function(){
+
+    Route::get('/dashboard',function(){
+        return view('dashboard.main');
+    })->name('dashboard');
+
+
+});
