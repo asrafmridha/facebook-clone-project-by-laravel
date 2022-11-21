@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -23,7 +26,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -35,9 +38,28 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'status'=>'required',
-            'image'=>'image',
+            'status'=>'string|required|max:250',
+            'image'=>'image|mimes:jpg,jpeg,png,svg|max:3000',
         ]);
+
+
+        $post=new Post();
+        if($request->hasFile('image'))
+        {
+           $image     = $request->file('image');
+           $filename   = uniqid() . '.' . $image->getClientOriginalExtension();
+           $location   = public_path('uploads/');
+           $image->move( $location, $filename);
+           $post->image = $filename;
+        }
+        
+        $post->status=$request->status;
+        
+        $post->likes=json_encode(array());
+        $post->shares=json_encode(array());
+        $post->user_id=Auth::user()->id;
+        $post->save();
+        return back()->with("message","Posted Status");
     }
 
     /**
@@ -48,7 +70,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
