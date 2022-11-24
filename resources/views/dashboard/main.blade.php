@@ -54,7 +54,7 @@
     </div>
     <div class="row post-body">
         <div class="col-sm-12">
-            This is the post body. Lorem Ipsum Doler sit. Lorem Ipsum Doler sit. Lorem Ipsum Doler sit. Lorem Ipsum Doler sit.
+           {{ $post->status }}
         </div>
     </div>
     <div class="row post-action">
@@ -62,9 +62,9 @@
             <li><a href="javascript:void(0);" class="text-mute" onclick="like(5);">Like</a></li>
             <li><a href="javascript:void(0);" class="text-mute" onclick="share(5);">Share</a></li>
             <li><a href="javascript:void(0);" class="text-mute" onclick="comment(5);">Comment</a></li>
-            <li class="pull-right"><a href="#" class="text-mute"><span id="post_like_count_5">2142</span> Likes</a></li>
-            <li class="pull-right"><a href="#" class="text-mute"><span id="post_comment_count_5">2172</span> Comments</a></li>
-            <li class="pull-right"><a href="#" class="text-mute"><span id="post_share_count_5">200</span> Shares</a></li>
+            <li class="pull-right"><a href="#" class="text-mute"><span id="post_like_count_5">{{ count(json_decode($post->likes)) }}</span> Likes</a></li>
+            <li class="pull-right"><a href="#" class="text-mute"><span id="post_comment_count_5">{{ $post->comments }}</span> Comments</a></li>
+            <li class="pull-right"><a href="#" class="text-mute"><span id="post_share_count_5">{{ count(json_decode($post->shares)) }}</span> Shares</a></li>
         </ul>
     </div>
 </div>
