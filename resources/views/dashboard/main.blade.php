@@ -40,15 +40,15 @@
 
  @foreach ($post as $post)
 
- <div class="post col-sm-12" id="post_5">
+ <div class="post col-sm-12">
     <div class="row post-heading">
         <div class="col-sm-12">
             <a href="profile.html">
-                <img src="assets/imgs/1.jpg" class="profile-picture pull-left"/>
+                <img src="{{ asset("uploads/".$post->user_name->image) }}" class="profile-picture pull-left"/>
                 &nbsp;
                 <span class="post-user-name">  {{ ucfirst($post->user_name->f_name) }} {{ ucfirst($post->user_name->l_name) }}</span><br/>
                 &nbsp;
-                <small class="post-date text-mute">31th March, 2021 2:49PM</small>
+                <small class="post-date text-mute">Posted at {{ \Carbon\Carbon::parse($post->created_at)->format('Y-m-d') }}</small>
             </a>
         </div>
     </div>
@@ -56,6 +56,10 @@
         <div class="col-sm-12">
            {{ $post->status }}
         </div>
+
+        <div class="col-sm-12">
+            <img height="200px" width="250px" src="{{ asset("uploads/".$post->image) }}" class="pull-left"/>
+         </div>
     </div>
     <div class="row post-action">
         <ul class="post-action-menu">
@@ -70,10 +74,6 @@
 </div>
      
  @endforeach
-
-
-
 </div>
-    
 @endsection
 

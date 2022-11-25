@@ -34,17 +34,15 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             
-            'f_name' => ['required', 'string', 'max:255',],
-            'l_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'f_name'   => ['required', 'string', 'max:255',],
+            'l_name'   => ['required', 'string', 'max:255'],
+            'email'    => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'day'      =>['required', 'numeric'],
-            
-            'month'    =>['required', 'numeric'],
-            'year'      =>['required', 'numeric'],
+            'day'      => ['required', 'numeric'],
+            'month'    => ['required', 'numeric'],
+            'year'     => ['required', 'numeric'],
             'sex'      =>['required'],
         ],[
 
@@ -56,14 +54,14 @@ class RegisteredUserController extends Controller
         $birthday=DateTime::createFromFormat('Y-m-d',$request->get('year').'-'.$request->get('month').'-'.$request->day);
 
         $user = User::create([
-            'f_name' => $request->f_name,
-            'l_name'   => $request->l_name,
-            'b_date'   => $birthday,
+            'f_name'   =>$request->f_name,
+            'l_name'   =>$request->l_name,
+            'b_date'   =>$birthday,
             'sex'      =>$request->sex,
             'email'    =>$request->email,
-            'password' => Hash::make($request->password),
+            'password' =>Hash::make($request->password),
         ]);
-
+        
         event(new Registered($user));
 
         Auth::login($user);

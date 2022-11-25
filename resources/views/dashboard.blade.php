@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    @include('dashboard.header')
+@include('dashboard.header')
    
     <body>
         <div class="header no-shadow">
@@ -24,19 +24,19 @@
         <div class="main">
             <div class="container-fluid">
 
-                    @include('dashboard.left')
+                @include('dashboard.left')
 
-                    @yield('content')
+                @yield('content')
 
-                    @include('dashboard.right')
-                     
-                    @include('dashboard.chats') 
+                @include('dashboard.right')
+                    
+                @include('dashboard.chats') 
 
             </div>
         </div>
 
         @include('dashboard.footer')
-        
+
         @include('dashboard.script')
         
     </body>
