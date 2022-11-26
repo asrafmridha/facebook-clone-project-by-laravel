@@ -4,11 +4,12 @@
     <div class="col-sm-6">
         <div class="text-center">
             @if(Auth::user()->image)
+            
+                <img class="img-circle"  src="{{ asset('user/'.Auth::user()->image) }}"height="200" width="300">
 
-                <img class="img-circle"  src="{{ asset('user/'.Auth::user()->image) }}"  height="200" width="300">
             @else
 
-                <img class="img-circle"  src="{{ asset('user/doctor_3.jpg') }}"  height="200" width="300"> 
+                <img class="img-circle"  src="{{ asset('user/doctor_3.jpg') }}"  height="200" width="300">
 
             @endif
             <br><br>
@@ -35,9 +36,9 @@
             </tr>
             <tr>
                 <td><strong>Birthday</strong></td>
-                <td id="username">{{ Auth::user()->b_date }}</td>
+                <td id="birthday">{{ Auth::user()->b_date }}</td>
                 <td>
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" onclick="setField('username');">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" onclick="setField('birthday');">
                         Edit
                     </button>
                 </td>
@@ -51,7 +52,6 @@
                     </button>
                 </td>
             </tr>
-           
         </table>
     </div>
 
@@ -64,26 +64,46 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form>
-                        @csrf
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <h4><label id="field_name" class="pull-right"></label></h4>
-                                <input type="hidden" value="" name="field_name">
+                <form  method="POST" action="{{ route('userprofile.update',Auth::user()->id) }}">
+                    <div class="modal-body">
+                                {{-- @method('Put') --}}
+                                @csrf
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h4><label id="fld_name" class="pull-right"></label></h4>
+                                    <input type="hidden" value="" name="fld_name" id="fld_name">
+                                </div>
+                                <div class="col-sm-12">
+                                    <input  class="form-group" type="text"  id="fld_value" name="fld_value">
+                                </div>
                             </div>
-                            <div class="col-sm-8">
-                                <input type="text" value="" id="field_value">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+            </form>
             </div>
         </div>
     </div>
-
 @endsection
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+
+function setField(value){
+    $("#fld_name").html(value.charAt(0).toUpperCase()+value.substr(1).toLowerCase());
+
+     var fieldvalue=$('#'+value).html();
+    //  console.log(fieldvalue);
+
+    $('#fld_value').val(fieldvalue);
+    $("#fld_name").val(value); 
+    
+
+
+    }
+  
+</script>

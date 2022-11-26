@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserProfileController extends Controller
@@ -68,7 +69,15 @@ class UserProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request->all());
+        $user= User::find($id);
+        $user->f_name=$request->fld_value;
+        // $user->l_name=$request->fld_value;
+        // $user->email=$request->fld_value;
+        // $user->b_date=$request->fld_value;
+        $user->update();
+        return back();
+
     }
 
     /**
@@ -79,6 +88,6 @@ class UserProfileController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }

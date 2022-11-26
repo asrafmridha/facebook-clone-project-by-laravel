@@ -50,4 +50,6 @@ Route::group(['prefix'=>'','middleware'=>['auth']],function(){
 
     Route::get('/profile',[UserProfileController::class,'index'])->name('profile.index');
 
+    Route::post('userprofile.update/{id}',[UserProfileController::class,'update'])->name('userprofile.update');
+
 });
